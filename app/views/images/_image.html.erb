@@ -1,0 +1,10 @@
+#### THIS IS DIFFERENT IN THE TUTORIAL. FIX.
+
+<li>
+<%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' if image.metadata["image_type"] == "snapshot" %>
+<h2><%= image.name %></h2>
+<p class="detail">
+  Created at: <%= image.created %> | 
+  State: <%= image.state %>
+</p>
+</li>

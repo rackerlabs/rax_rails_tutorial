@@ -1,0 +1,22 @@
+<%= error_messages_for @server %>
+
+<%= form_for @server do |f| %>
+  <div>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
+  </div>
+
+  <div>
+  <%= f.label :flavor_id, "Flavor" %><br>
+  <%= f.select :flavor_id, object_options_for_select(:flavor) %>
+  </div>
+
+  <div>
+  <%= f.label :image_id, "Image" %><br>
+  <%= f.select :image_id, object_options_for_select(:image) %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Server" %>
+  </div>
+<% end %>

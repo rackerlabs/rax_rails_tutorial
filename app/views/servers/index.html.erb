@@ -1,0 +1,5 @@
+<h1>Server List</h1>
+<%= link_to "Create Server", new_server_path, :class => "button button-gray" %>
+<ul class="servers">
+  <%= render :partial => 'server', :collection => @servers %>
+</ul>

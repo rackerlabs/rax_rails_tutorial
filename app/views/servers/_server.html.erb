@@ -1,0 +1,8 @@
+<li>
+  <%= link_to "delete", server_path(server.id), :method => :delete, :confirm => "Are you sure you want to delete this server?", :class => "button button-red right"%>
+  <h2><%= server.name %></h2>
+  <p class="detail">
+  Flavor: <%= Flavor.find_by_id(server.flavor_id).name %> | 
+  State: <%= server.state %>
+  </p>
+</li>

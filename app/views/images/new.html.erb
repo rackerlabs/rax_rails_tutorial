@@ -1,0 +1,17 @@
+<%= error_messages_for @image %>
+
+<%= form_for @image do |f| %>
+  <div>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
+  </div>
+
+  <div>
+  <%= f.label :server_id, "Server" %><br>
+  <%= f.select :server_id, object_options_for_select(:server) %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Image" %>
+  </div>
+<% end %>

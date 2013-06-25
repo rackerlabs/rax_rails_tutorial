@@ -1,5 +1,3 @@
-#THIS HAS CHANGED
-
 class Image < CloudModelBase
 
   attr_accessor :name,

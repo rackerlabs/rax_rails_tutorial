@@ -132,24 +132,24 @@ Before we get started on the models and controllers, there are a couple more bas
 ```ruby
 module ErrorMessagesHelper
     # Render error messages for the given objects. The :message and :header_message options are allowed.
-  def error_messages_for(*objects)
-    options = objects.extract_options! 
-    options[:header_message] ||= "Invalid Fields"
-    options[:message] ||= "Correct the following errors and try again."
-    messages = objects.compact.map { |o| o.errors.full_messages}.flatten
-    unless messages.empty?
-      content_tag(:div, :class => "error_messages") do
-        list_items = messages.map { |msg| content_tag(:li, msg) }
-        content_tag(:h2, options[:header_message]) + content_tag(:p, options[:message]) + content_tag(:ul, list_items.join.html_safe)
-      end
-    end
-  end
-  
-  module FormBuilderAdditions
-    def error_messages(options = {})
-      @template.error_messages_for(@object, options)
-    end
-  end
+  def error_messages_for(*objects)
+    options = objects.extract_options! 
+    options[:header_message] ||= "Invalid Fields"
+    options[:message] ||= "Correct the following errors and try again."
+    messages = objects.compact.map { |o| o.errors.full_messages}.flatten
+    unless messages.empty?
+      content_tag(:div, :class => "error_messages") do
+        list_items = messages.map { |msg| content_tag(:li, msg) }
+        content_tag(:h2, options[:header_message]) + content_tag(:p, options[:message]) + content_tag(:ul, list_items.join.html_safe)
+      end
+    end
+  end
+
+  module FormBuilderAdditions
+    def error_messages(options = {})
+      @template.error_messages_for(@object, options)
+    end
+  end
 end
 
 ActionView::Helpers::FormBuilder.send(:include, ErrorMessagesHelper::FormBuilderAdditions)
@@ -161,139 +161,138 @@ The last bit of prep we're going to do is to add some CSS. To save you the work,
 
 ```css
 html, body {
-  background-color: #ccc;
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+  background-color: #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
 }
 
 a {
-  color: #0000FF;
-  img { border: none; }
+  color: #0000FF;
+  img { border: none;}
 }
 
 h2 {
-  font-size:18px;
-  margin:0;
+  font-size:18px;
+  margin:0;
 }
 
 p.detail {color: #666;}
 .right {float:right;}
 
 #container {
-  width: 80%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px #999;
-  margin-top: 20px;
-  -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2); 
-  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2); 
+  width: 80%;
+  margin: 0 auto;
+  background-color: #FFF;
+  padding: 20px 40px;
+  border: solid 1px #999;
+  margin-top: 20px;
+  -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2); 
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2); 
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 #navigation {
-  text-align:right;
+  text-align:right;
 }
 
 ul.servers, ul.images {
-  list-style:none;
-  margin:0;
-  padding:0;
+  list-style:none;
+  margin:0;
+  padding:0;
 }
 
 ul.servers li, ul.images li {
-  display:block;
-  padding:10px;
-  margin:3px 0;
-  border: 1px solid #ccc;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+  display:block;
+  padding:10px;
+  margin:3px 0;
+  border: 1px solid #ccc;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
 }
 
 a.button {
-  padding:8px 12px 6px 12px;
-  height:12px;
-  line-height:10px;
-  font-size:16px;
-  display:inline-block;
-  text-decoration:none;
-  text-align:center;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+  padding:8px 12px 6px 12px;
+  height:12px;
+  line-height:10px;
+  font-size:16px;
+  display:inline-block;
+  text-decoration:none;
+  text-align:center;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
 }
 
 a.button.button-gray {
-  color: #222;
-  text-shadow: #ddd 0px 1px 1px;
-  border:1px solid #aaa;
-  background: -webkit-linear-gradient(top, #dfdfdf, #b9b9b9);
+  color: #222;
+  text-shadow: #ddd 0px 1px 1px;
+  border:1px solid #aaa;
+  background: -webkit-linear-gradient(top, #dfdfdf, #b9b9b9);
   background: -moz-linear-gradient(top, #dfdfdf, #b9b9b9);
   background-color: #b9b9b9;
 }
 
 a.button.button-gray:hover {
-  background: -webkit-linear-gradient(top, #b9b9b9, #dfdfdf);
+  background: -webkit-linear-gradient(top, #b9b9b9, #dfdfdf);
   background: -moz-linear-gradient(top, #b9b9b9, #dfdfdf);
   background-color: #dfdfdf;
 }
 
 a.button.button-red {
-  color:#fff;
-  text-shadow: #A80E1D 0px 1px 1px;
-  border:1px solid #A80E1D;
-  background: -webkit-linear-gradient(top, #fc7c6d, #e3111b);
-  background: -moz-linear-gradient(top, #fc7c6d, \#e3111b);
+  color:#fff;
+  text-shadow: #A80E1D 0px 1px 1px;
+  border:1px solid #A80E1D;
+  background: -webkit-linear-gradient(top, #fc7c6d, #e3111b);
+  background: -moz-linear-gradient(top, #fc7c6d, \#e3111b);
   background-color: #e3111b;
 }
 
 a.button.button-red:hover {
   background: -webkit-linear-gradient(top, #e3111b, #fc7c6d);
-  background: -moz-linear-gradient(top, #e3111b, #fc7c6d);
-  background-color: #fc7c6d;
+  background: -moz-linear-gradient(top, #e3111b, #fc7c6d);
+  background-color: #fc7c6d;
 }
 
 .flash-notice {
-  color: #00B205;
+  color: #00B205;
 }
 
 .error_messages, #error_explanation {
-  width: 400px;
-  border: 2px solid #CF0000;
-  padding: 8px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  font-size: 12px;
-  -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 8px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+  -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
 
-  h2 {
-    text-align: left;
-    font-weight: bold;
-    padding: 5px 10px;
-    font-size: 13px;
-    margin: 0;
-    background-color: #c00;
-    color: #fff;
-  }
-  p { margin: 8px 10px; }
-  ul { margin-bottom: 0; }
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 13px;
+    margin: 0;
+    background-color: #c00;
+    color: #fff;
+  }
+  p { margin: 8px 10px; }
+  ul { margin-bottom: 0; }
 }
 
-
 .field_with_errors {
-  display: inline;
+  display: inline;
 }
 
 form .field, form .actions {
-  margin: 12px 0;
+  margin: 12px 0;
 }
 
 ul.errors li {
-  color: #DD0000;
-  margin-bottom: 8px;
+  color: #DD0000;
+  margin-bottom: 8px;
 }
 ```
 
@@ -326,9 +325,9 @@ We'll have to tell Rails about the `app_config.yml` file so that it knows where 
 ```ruby
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
 end
 
 require 'yaml'
@@ -379,8 +378,8 @@ class CloudModelBase
 
   def self.compute
     @compute ||= Fog::Compute.new(
-      :provider           => 'Rackspace',
-      :rackspace_api_key  => APP_CONFIG[:rackspace_api_key],
+      :provider => 'Rackspace',
+      :rackspace_api_key => APP_CONFIG[:rackspace_api_key],
       :version => :v2,
       :rackspace_username => APP_CONFIG[:rackspace_username])
   end
@@ -460,7 +459,7 @@ Nothing magic here, just a standard Rails resourceful route. 
 
 Lets try it. Create a veiw at `app/views/servers/index.html.erb` that contains this code:
 
-```html
+```html+ruby
 <h1>Server List</h1>
 
 <%= link_to "Create Server", new_server_path, :class => "button button-gray" %>
@@ -472,7 +471,7 @@ Lets try it. Create a veiw at `app/views/servers/index.html.erb` that contains t
 
 along with a partial at `app/views/servers/_server.html.erb`:
 
-```html
+```html+ruby
 <li>
   <%= link_to "delete", server_path(server.id), :method => :delete, :confirm => "Are you sure you want to delete this server?", :class => "button button-red right"%>
   <h2><%= server.name %></h2>
@@ -486,7 +485,7 @@ There is nothing fancy here either - we're just iterating through the `Server` o
 
 Now is a good time to update our `app/views/layouts/application.html.erb` view. Edit it to look like this:
 
-```html
+```html+ruby
 <!DOCTYPE html>
 
 <html>
@@ -561,7 +560,7 @@ Otherwise, this should be familiar stuff.
 
 Next, we'll need a view for the server form. Create it at `app/views/servers/new.html.erb`:
 
-```html
+```html+ruby
 <%= error_messages_for @server %>
 
 <%= form_for @server do |f| %>
@@ -680,12 +679,12 @@ When you click the "Create Server" button on the new server form, you will actua
 Destroying servers is much easier. We've already added the links to do that. We just need to add a `destroy` action to the Servers controller:
 
 ```ruby
-  def destroy
-    @server = Server.find_by_id(params[:id])
-    Server.delete(@server.id)
-    flash[:notice] = "Server destroyed"
-    redirect_to servers_path
-  end
+  def destroy
+    @server = Server.find_by_id(params[:id])
+    Server.delete(@server.id)
+    flash[:notice] = "Server destroyed"
+    redirect_to servers_path
+  end
 ```
 
 Try it. Your server should be deleted from your Rackspace account.
@@ -694,7 +693,7 @@ Now we're finished with servers. One last task is to clean up the home page. We'
 
 ```ruby
 Serverly::Application.routes.draw do
-  resources :servers
+  resources :servers
   root :to => 'servers#index'
 end
 ```
@@ -746,7 +745,7 @@ See some parallels with the Servers controller? You should, because it follows t
 
 The index page is also similar in structure to the Servers index page. Create a new view at app/views/images/index.html.erb:
 
-```html
+```html+ruby
 <h1>Image List</h1>
 <%= link_to "Create Image", new_image_path, :class => "button button-gray" %>
 <ul class="images">
@@ -756,7 +755,7 @@ The index page is also similar in structure to the Servers index page. Create a 
 
 You'll also need to create a partial at app/views/images/_image.html.erb:
 
-```html
+```html+ruby
 <li>
 <%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' if image.metadata["image_type"] == "snapshot" %>
 <h2><%= image.name %></h2>
@@ -770,7 +769,7 @@ In this partial, we deviate from the server pattern slightly. We included a chec
 
 Our Image index is ready, but before we check it out, lets update the navigation in our layout. Add the following line to `app/views/layouts/applciation.html.erb`:
 
-```html
+```html+ruby
 ...
 <div id="container">
   <div id="navigation">
@@ -778,7 +777,7 @@ Our Image index is ready, but before we check it out, lets update the navigation
     <%= link_to "Image List", images_path, :class => "button button-gray" %>
   </div>
   <% flash.each do |key,value| %>
-  ...
+...
 ```
 
 Finally, update the `config/routes.rb` file:
@@ -800,7 +799,7 @@ There are no images to display yet - let's fix that.
 ###Creating Images
 Create a view for the new image form at `apps/views/images/new.html.erb`:
 
-```html
+```html+ruby
 <%= error_messages_for @image %>
 
 <%= form_for @image do |f| %>

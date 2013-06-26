@@ -681,7 +681,7 @@ Destroying servers is much easier. We've already added the links to do that. We 
   end
 ```
 
-Try it. Your server should be deleted from your Rackspace account.
+Try it. Your server should be deleted from your Rackspace account, although it might take a few moments becuase Rackspace queues those requests. If a server still shows up after you've deleted it, wait a few minutes and check again. The list will be updated.
 
 Now we're finished with servers. One last task is to clean up the home page. We'll use our `servers#index` page as the homepage instead of the default rails page. Go ahead and delete `public/index.html` and `app/assets/images/rails.png`. Then add a route to `config/routes.rb`:
 

@@ -8,7 +8,7 @@ In this tutorial, we will walk you through the creation of a simple Rails applic
 
 Part 1 of the tutorial will show you how to write the Rails application. Part 2 will walk you through the steps required to deploy the application on a Rackspace Cloud server.
 
-##Who is This Tutorial for?
+###Who is This Tutorial for?
 
 This tutorial requires a basic understanding of Rails development. If you’ve done an introductory tutorial, you should be able to follow along just fine. If you want to brush up on some of the required skills, here are some good resources:
 
@@ -20,7 +20,7 @@ This tutorial requires a basic understanding of Rails development. If you’ve d
 
 To keep this tutorial accessible by a wide range of developers, from beginners to experts, we have simplified our demonstration app down to its most basic form. You can think of this tutorial as the first batch of work in an agile development process.
 
-##Requirements
+###Requirements
 
 Our application, which we will call Servely (*-ly* names are all the rage these days), will do only a few things:
 
@@ -34,13 +34,15 @@ Our application, which we will call Servely (*-ly* names are all the rage these 
 (Yes, we can do this quite easily in the Rackspace Cloud control panel,
 but humor us - this is just the beginning of what is possible).
 
-##Outline
+###Outline
 
-- Getting Started
-- Servers Part A
-- Servers Part B 
-- Images
-- Wrap Up
+- [Getting Started](https://github.com/rackerlabs/rax_rails_tutorial#getting-started-creating-the-base-rails-app)
+- [The First Feature: Servers](https://github.com/rackerlabs/rax_rails_tutorial#the-first-feature-servers)
+- [Where's The Database?](https://github.com/rackerlabs/rax_rails_tutorial#wheres-the-database)
+- [The Server Model](https://github.com/rackerlabs/rax_rails_tutorial#the-server-model)
+- [Finishing The Server UI: Creating and Deleting](https://github.com/rackerlabs/rax_rails_tutorial#finishing-the-server-ui-creating-and-deleting)
+- [Images](https://github.com/rackerlabs/rax_rails_tutorial#images)
+- [Wrap Up](https://github.com/rackerlabs/rax_rails_tutorial#wrap-up)
 
 ##Getting Started: Creating the Base Rails App
 
@@ -431,7 +433,7 @@ Notice that this model class is inheriting from the base class we just created. 
 
 The class methods are pretty simple, we are just using the `@compute` object to call the Rackspace API via the fog gem. For our app, we'll need to be able to pull a list of servers with the `all` method, a single server with the `find_by_id` method, and to create and destroy servers. Notice that we're calling methods on the `@compute` object to do this and fog handles the details. Easy!
 
-##Listing the Servers
+###Listing the Servers
 
 Our first feature will be to retrieve and show a list of the available servers on our account. We'll need a controller and a view.
 
@@ -531,7 +533,7 @@ To create a server, we need to select a "flavor" for that server. A flavor is ba
 
 We also need a image from which to create the server. Images are saved snapshots of working servers on disk. Rackspace has several images available by default (for example, an Ubuntu 10.04 LTS image, from which you can create your own server. You can also save your own custom images. We'll get to that when we're through with the servers.
 
-##Adding the Controller Actions
+###Adding the Controller Actions
 
 To create a server, we need the customary RESTful actions, `new` and `create`. Go ahead and add them to `app/controllers/servers_controller.rb`:
 

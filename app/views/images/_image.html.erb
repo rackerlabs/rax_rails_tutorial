@@ -1,5 +1,5 @@
 <li>
-<%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' if image.metadata["image_type"] == "snapshot" %>
+<%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' %>
 <h2><%= image.name %></h2>
 <p class="detail">
   Created at: <%= image.created %> | 

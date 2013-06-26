@@ -750,7 +750,7 @@ You'll also need to create a partial at app/views/images/_image.html.erb:
 
 ```html+ruby
 <li>
-<%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' if image.metadata["image_type"] == "snapshot" %>
+<%= link_to "destroy", image_path(image.id), :method => :delete, :confirm => "Are you sure you want to destroy this image?", :class => 'button button-red right' %>
 <h2><%= image.name %></h2>
 <p class="detail">
   Created at: <%= image.created %> | 
@@ -758,7 +758,6 @@ You'll also need to create a partial at app/views/images/_image.html.erb:
 </p>
 </li>
 ```
-In this partial, we deviate from the server pattern slightly. We included a check on the "Destroy" button to see if the image is a snapshot or a base image, since you cannot destroy base images. This check is slow (again, it's one API call per image), and you can leave it out if you're using `Image.snapshots` in the controller like we are. However, if you want to see all of the images (by using `Image.all in the controller), the check is necessary. Unfortunately, one way or another, we need to check every image's `metadata[image_type'] one at a time. This may change in future versions of fog (which is always accepting contributions, hint, hint!)
 
 Our Image index is ready, but before we check it out, lets update the navigation in our layout. Add a link to the image list in the navigation `div` in  `app/views/layouts/applciation.html.erb`:
 

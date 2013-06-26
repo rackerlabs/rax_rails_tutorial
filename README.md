@@ -4,13 +4,13 @@
 
 The Rackspace Cloud has a control panel that allows you to create new cloud servers, save cloud server images, and many other features related to managing your Rackspace cloud account. But did you know that you can build your own control panel with Rails? 
 
-In this tutorial, we will walk you through the creation of a simple Rails application that will allow you to manage your servers. Our goal is to get you thinking about how you can help streamline your own operations by building your own custom dashboard.
+In this tutorial, we will walk you through the creation of a simple Rails application that will allow you to manage your servers. Our goal is to get you thinking about how you can help streamline your operations by building a custom dashboard.
 
-Part 1 of the tutorial will show you how to write the Rails application. Part 2 will walk you through the steps required to deploy the application on a Rackspace Cloud server.
+This tutorial will show you how to write the Rails application. There is also a Depolyment Tutorial that will walk you through the steps required to deploy an application on a Rackspace Cloud server.
 
 ###Who is This Tutorial for?
 
-This tutorial requires a basic understanding of Rails development. If you’ve done an introductory tutorial, you should be able to follow along just fine. If you want to brush up on some of the required skills, here are some good resources:
+This tutorial requires a basic understanding of Rails development. While this is an intermediate level app, if you’ve done an introductory tutorial or read one of the many introductory books on Rails, you should be able to follow along just fine. If you want to brush up on some of the required skills, here are some good resources:
 
 **Ruby** - Why's Poignant Guide to Ruby - [http://mislav.uniqpath.com/poignant-guide/book/](http://mislav.uniqpath.com/poignant-guide/book/) 
 
@@ -31,8 +31,7 @@ Our application, which we will call Servely (*-ly* names are all the rage these 
 - Allow you to delete a server.
 - Allow you to delete an image.
 
-(Yes, we can do this quite easily in the Rackspace Cloud control panel,
-but humor us - this is just the beginning of what is possible).
+(Yes, we can do this quite easily in the Rackspace Cloud control panel, but humor us - this is just the beginning of what is possible).
 
 ###Outline
 
@@ -46,7 +45,7 @@ but humor us - this is just the beginning of what is possible).
 
 ##Getting Started: Creating the Base Rails App
 
-We are going to be using Ruby version 1.9.3-p385 and Rails version 3.2.13, both the latest versions as of the date of this writing. (Ruby 2.0 has just been released, and will probably work just fine for this tutorial, but we'll stick with 1.9.3 because 2.0 is *so* new.)
+We are going to be using Ruby version 1.9.3-p385 and Rails version 3.2.13, both the latest versions as of the date of this writing. (Ruby 2.0 has just been released, and will probably work just fine for this tutorial, but we'll stick with 1.9.3 because 2.0 is *so* new.) You can download the latest version of Ruby at <http://rubylang.org>.
 
 For a database, we will be using MySQL, which you should install on your development machine (we will be using it for both development and production).
 
@@ -66,9 +65,9 @@ Now that we’re ready, step one is to create the empty Rails application for Se
 rails new serverly -d mysql
 ```
 
-We use the `-d` option to set up the new application to use MySQL instead of the default Sqlite.
+We use the `-d` option to set up the new application to use MySQL instead of the default Sqlite. As we'll see in a moment, we don't actually use a database in our application. However, it will almost certainly be used in a real application, and it's easier just to go along with the defaults than it is to turn off this functionality in Rails.
 
-Now that we have a base application created, we'll do a little more configuration before checking the source code into git.
+Now that we have a base application created, we'll do a little more configuration before checking the source code into Git.
 
 Since we're using rbenv, it's a good time to create a config file that tells rbenv which version of ruby to use by default so we don't have to. Simply create a file in the severly directory called `.rbev-version` and edit it to contain the following:
 
@@ -83,11 +82,11 @@ Next we'll want to update our `.gitignore` file (which was created by Rails auto
 .rbenv-version
 ```
 
-The first line tells Git not to track the databse.yml config file in source control. While this is not strictly necessary since we won't be using this file for deployment, it's a good habit by default - never check passwords into source control. The second tells us git not to track the rbenv config file we just created since that is only relevant to our local development environment.
+The first line tells Git not to track the `databse.yml` config file in source control. While this is not strictly necessary since we won't be using this file for deployment, it's a good habit by default - never check passwords into source control. The second tells us git not to track the rbenv config file we just created since that is only relevant to our local development environment.
 
 If you're using a Mac, you may also want to add `.DS_Store` files to your global `.gitignore_global` file. If you don't have one, run
 
-```bash
+```
 git config --global core.excludesfile ~/.gitignore_global
 ```
 
@@ -101,7 +100,7 @@ to the file at `~/.gitignore_global`, which contains all of the files you want g
 
 Finally, it's time to check the project into git.
 
-```bash
+```
 git init  
 git add .
 git commit -m "initial commit"
@@ -109,19 +108,19 @@ git commit -m "initial commit"
 
 From here on out, I will not be including commits to git in order to keep from distracting from the main tutorial. However, it is recommended that you make commits often and that each of your commits has an easily described purpose which is detailed in a short message with the `-m` option.
 
-Now that we've got our  base application generated and checked into source control, lets run it to verify that everything is working.
+Now that we've got our base application generated and checked into source control, lets run it to verify that everything is working.
 
 First, we'll need to generate the development database. In the serverly directory, run
 
-```bash
+```
 bundle exec rake db:create
 ```
 
-That will create a MySQL database called `serverly_development`. It turns out we will not be using this database during this tutorial - but we'll include it now because it's the easy thing to do, and it will be needed eventually if you continue to build this app out.
+That will create a MySQL database called `serverly_development`. Again, we will not be using this database during this tutorial - but we'll include it now because it's the easy thing to do, and it will be needed eventually if you continue to build this app out.
 
 And finally, start the app with
 
-```bash
+```
 bundle exec rails server
 ```
 
@@ -159,7 +158,7 @@ ActionView::Helpers::FormBuilder.send(:include, ErrorMessagesHelper::FormBuilder
 
 That way, we can call `<%= error_messages_for @some_model %>` in our views. Hat tip to Ryan Bates at [Railscasts](http://railscasts.com) for this code - it's a little cleaner than the helper that used to be included in Rails (before Rails 3).
 
-The last bit of prep we're going to do is to add some CSS. To save you the work, just create a file at `app/assets/stylesheets/serverly.scss` with the following content (note that we're using Sass in the Gemfile):
+The last bit of prep we're going to do is to add some CSS. To save some work, just create a file at `app/assets/stylesheets/serverly.scss` with the following content (note that we're using Sass in the Gemfile):
 
 ```scss
 html, body {
@@ -298,13 +297,11 @@ ul.errors li {
 }
 ```
 
-We're now ready to get to work on the models.
-
 ##The First Feature: Servers
 
 The first feature we want to create is to be able to list all of the servers contained in your Rackspace Cloud account. You will of course first need a Rackspace cccount. It's free to [sign up](https://cart.rackspace.com/cloud/).
 
-In order for our app to access your account, we'll need to get the API credentials. You can find them at: [https://manage.rackspacecloud.com/APIAccess.do](http://url.here)
+In order for our app to access your account, we'll need to get the API credentials. You can find them in the Rackspace Cloud Control Panel.
 
 We're going to store your credentials in a config file. Create a file at `config/app_config.yml` and add the following to it, substituting your credentials.
 
@@ -320,7 +317,7 @@ development:
 config/app_config.yml
 ```
 
-We don't want to check any passwords into source control.
+We don't want to check any sensitive credentials into source control.
 
 We'll have to tell Rails about the `app_config.yml` file so that it knows where to find it and load it. In `config/application.rb`, add the following code just after the `if_defined?` block like this:
 
@@ -337,18 +334,16 @@ require 'yaml'
 APP_CONFIG = YAML.load_file(File.expand_path "../app_config.yml", __FILE__)[Rails.env].symbolize_keys!
 
 module Serverly
-
-#... more code
+...
 ```
 
 What we've done is to add a hash called `APP_CONFIG` that contains the contents of the `app_config.yml` file based on the current environment. If we need to access the api key, for example, we can get it with `APP_CONFIG[:rackspace_api_key]` anywhere in our application.
 
-Now restart the server with `bundle exec rails server` and our we're ready
-to start work on the `Sever` model and controller.
+Now restart the server with `bundle exec rails server` and our we're ready to start work on the `Sever` model and controller.
 
 ##Where's the Database?
 
-Since all the data about our servers is kept on Rackspace's servers, we don't need to store it in the database. Instead of `ActiveRecord` models, we'll be using database-less `ActiveModel` models. These models will behave just like the regular rails models you're used to, but will retrieve their data from Rackspace via the API, which we will access with the [fog gem](http://fog.io).
+Since all the data about our servers is kept on Rackspace's servers, we don't need to store it in the database. Instead of `ActiveRecord` models, we'll be using database-less `ActiveModel` models. These models will behave similarly the regular rails models you're used to, but will retrieve their data from Rackspace via the API, which we will access with the [fog gem](http://fog.io).
 
 First, add the fog gem to your `Gemfile`:
 
@@ -356,8 +351,7 @@ First, add the fog gem to your `Gemfile`:
 gem "fog", "~> 1.9.0"
 ```
 
-and run `bundle install` and restart the server.
-
+then run `bundle install` and restart the server.
 
 All of the models in our app will use some similar code, so we will opt to have them inherit from a base class. In the `app/models` directory, create a file called `cloud_model_base.rb`:
 
@@ -388,14 +382,13 @@ class CloudModelBase
 end
 ```
 
-Lets take a look at this base class. First, notice that we are not inheriting from `ActiveRecord`. This is just a plain Ruby class. The first three lines of the class put some of the `ActiveModel` functionality back into the class that we're used to having. We can validate this model, and use it elsewhere within rails without problem. Check out the `ActiveModel` documentation for more detail.
+Lets take a look at this base class. First, notice that we are not inheriting from `ActiveRecord`. This is just a plain Ruby class. The first three lines of the class put some of the `ActiveModel` functionality that we're used to having into the class. We can validate this model, and use it elsewhere within rails without problem. Check out the `ActiveModel` documentation for more detail.
 
 Since we don't have a database, we have to declare our attributes as Ruby attributes with `attr_accessor`, which we will do in the model subclass. This will create getters and setters for the attributes. In the initialize method, we assign the values to those instance variables. Nothing special here.
 
 The `persisted?` method tells `ActiveModel` that we will not be using a database.
 
 And finally, the `compute` class method is where we set up our connection with Rackspace using fog. The `@compute` object is the object we will use in the subclasses to access our Rackspace account. The version parameter specifies that we will be using Rackspace's next generation cloud servers (v1 is deprecated). Now lets create a `Server` subclass.
-
 
 ##The Server Model
 
@@ -429,9 +422,9 @@ class Server < CloudModelBase
 end
 ```
 
-Notice that this model class is inheriting from the base class we just created. We'll need three attributes for the `Server` model, all of which will be required. We can call validates because we included the `ActiveModel::Validations` module in the base class.
+Notice that this model class is inheriting from the base class we just created. We'll need three attributes for the `Server` model, all of which will be required to be present. We can call validates because we included the `ActiveModel::Validations` module in the base class.
 
-The class methods are pretty simple, we are just using the `@compute` object to call the Rackspace API via the fog gem. For our app, we'll need to be able to pull a list of servers with the `all` method, a single server with the `find_by_id` method, and to create and destroy servers. Notice that we're calling methods on the `@compute` object to do this and fog handles the details. Easy!
+The class methods are pretty simple, we are just using the `@compute` object to call the Rackspace API via the fog gem. For our app, we'll need to be able to pull a list of servers with the `all` method, a single server with the `find_by_id` method, and to create and destroy servers. Notice that we're calling methods on the `compute` object to do this and fog handles the details. Easy!
 
 ###Listing the Servers
 
@@ -447,7 +440,7 @@ class ServersController < ApplicationController
 end
 ```
 
-This is a straightforward Rails controller with a single action - `index`. Instead of calling `find` on and `ActiveRecord` model, we're calling `all` on our custom model. It's worth noting that the object returned is going to be a `Fog::Compute::Rackspace::Servers` object (note the plural `Servers`), which is a collection of `Fog::Compute::Rackspace::Server` objects - one for each server. But for our purposes, you can treat them like they were `ActiveModel` objects - they have attributes that we can access in our views in the same way.
+This is a straightforward Rails controller with a single action - `index`. Instead of calling `find` on and `ActiveRecord` model, we're calling `all` on our custom model. It's worth noting that the object returned is going to be a `Fog::Compute::Rackspace::Servers` object (note the plural `Servers`), which is a collection of `Fog::Compute::Rackspace::Server` objects - one for each server. For our purposes, you can treat this as an `Array` of `ActiveModel` objects - they have attributes that we can access in our views in the same way.
 
 To access this action, we'll need to update `conifg/routes.rb`. Edit the file to look like this:
 
@@ -518,12 +511,11 @@ Now is a good time to update our `app/views/layouts/application.html.erb` view. 
 
 In the container `div` we've added a navigation menu (with only one link so far) and an area to display flash messages.
 
-
 Navigate your browser to <http://localhost:3000/servers> and you should see something like this:
 
 ![Server Index](https://github.com/rackerlabs/rax_rails_tutorial/raw/master/doc/Server-Index.png)
 
-The Create Server link wont work because we haven't created the `create` action yet, but we'll take care of that soon. Likewise, if you look at the `_server.html.erb` partial, you'll see a call to the `Flavor` model, which we will also soon create. It's not getting called because we don't have any servers yet.
+The Create Server link wont work because we haven't created the `create` action yet, but we'll take care of that soon. Likewise, our reference to the  yet-to-be-created Flavor model is not getting called because we don't have any servers yet.
 
 ##Finishing The Server UI: Creating and Deleting
 
@@ -664,7 +656,7 @@ class Image < CloudModelBase
 end
 ```
 
-The `Image` class closely parallels our `Server` model. There is one method that requies a little explanation, however. The `snapshots` method returns only the images that you have created. It leaves out the ones created by Rackspace. Each image has a hash called `metadata` that includes an `'image_type'` key that will be eihter `'base'` (Rackspace images) or `'snapshot'` (user images). The `'all'` class method will return all the images. So we just `partition` out the snapshots.
+The `Image` class closely parallels our `Server` model. There is one method that requies a little explanation, however. The `snapshots` method returns only the images that you have created. It leaves out the ones created by Rackspace. Each image has a hash called `metadata` that includes an `'image_type'` key that will be either `'base'` (Rackspace images) or `'snapshot'` (user-created images). The `'all'` class method will return all the images. So we just `partition` out the snapshots.
 
 We also have to `reload` the images. This is a quirk of fog and the OpenStack system. When you first request an image, you get a version with only some of the attributes. When you reload the image, all of the attributes will be present. This may change in the future, but that's the state of things now.
 
@@ -701,7 +693,6 @@ end
 ```
 
 Now navigating to <http://localhost:3000> will show our server list page.
-
 
 ##Images
 Severly now has the ability to list our servers, create them from available flavors and images, and delete them. Flavors are fixed by Rackspace, but we can create images ourselves. Lets build an interface for Images that is similar to the one we have for Servers.
@@ -767,9 +758,9 @@ You'll also need to create a partial at app/views/images/_image.html.erb:
 </p>
 </li>
 ```
-In this partial, we deviate from the server pattern slightly. We included a check on the "Destroy" button to see if the image is a snapshot or a base image, since you cannot destroy base images. This check is slow (again, it's one API call per image), and you can leave it out if you're using `Image.snapshots` in the controller like we are. However, if you want to see all of the images (by using `Image.all in the controller), the check is necessary. Unfortunately, one way or another, we need to check every image's `metadata[image_type'], one at a time. This may change in future versions of fog (which is always accepting contributions, hint, hint!)
+In this partial, we deviate from the server pattern slightly. We included a check on the "Destroy" button to see if the image is a snapshot or a base image, since you cannot destroy base images. This check is slow (again, it's one API call per image), and you can leave it out if you're using `Image.snapshots` in the controller like we are. However, if you want to see all of the images (by using `Image.all in the controller), the check is necessary. Unfortunately, one way or another, we need to check every image's `metadata[image_type'] one at a time. This may change in future versions of fog (which is always accepting contributions, hint, hint!)
 
-Our Image index is ready, but before we check it out, lets update the navigation in our layout. Add the following line to `app/views/layouts/applciation.html.erb`:
+Our Image index is ready, but before we check it out, lets update the navigation in our layout. Add a link to the image list in the navigation `div` in  `app/views/layouts/applciation.html.erb`:
 
 ```html+ruby
 ...
@@ -825,7 +816,6 @@ The required inputs to create an image are the name you want to give it and the 
 
 And that's it. We now have a simple app that can create and manage servers and images on your Rackspace account. You should be able to create servers from any available image (Rackspace's or yours), and you should be able to create an image from any of your servers.
 
-
 ##Wrap Up
 
 Obviously, our simple Serverly app does nothing that you can't do better in the actual Rackspace control panel. But that's not why we wrote this up. What we wanted to accomplish is to show you how easy it is to interact with the Rackspace API via the fog gem, and get you thinking about creative ways to manage your own cloud resources in your own custom control panel. 
@@ -837,7 +827,7 @@ For some information on the fog errors, see the code on Github: [https://github.
 The Rackspace team works closely with the fog community - take advantage of that support and the high quality of the fog gem. 
 
 ###Expansion Ideas
-This tutorial is pretty crude in. We tried to keep it interesting by introducing some intermediate concepts, but we also needed to keep it digetable. Hopefully we've accomplished that.
+This tutorial is pretty crude. We tried to keep it interesting by introducing some intermediate concepts, but we also needed to keep it digetable. Hopefully we've accomplished that.
 
 We've explored a very simple way of accesing Rackspace via a databaseless model and seen some of the drawbacks of that approach - it can be slow. On the other hand, we did not have to worry about synching data between our own database and Rackspace. Adding a database to track things like the image_type of the images would greatly speed things up, and allow you to track data outside of that provided by the Rackspace system.
 
@@ -847,4 +837,4 @@ Create a custom status page for your servers. Or create a custom control panel t
 
 ##Don't Forget!
 
-If you're working through this tutorial on your own, don't forget to delete your test servers so you don't get charged. Better yet, investigate the mocks built into fog so you can test your code without actually creating and destroying servers - get started here: [http://fog.io/about/structure.html](http://fog.io/about/structure.html/)
+If you're working through this tutorial on your own, don't forget to delete your test servers so you don't get charged. Better yet, investigate the mocks built into fog so you can test your code without actually creating and destroying servers - get started here: <https://github.com/fog/fog/blob/master/lib/fog/rackspace/docs/getting_started.md>

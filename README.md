@@ -159,7 +159,7 @@ That way, we can call `<%= error_messages_for @some_model %>` in our views. Hat 
 
 The last bit of prep we're going to do is to add some CSS. To save you the work, just create a file at `app/assets/stylesheets/serverly.scss` with the following content (note that we're using Sass in the Gemfile):
 
-```sass
+```scss
 html, body {
   background-color: #ccc;
   font-family: Arial, sans-serif;

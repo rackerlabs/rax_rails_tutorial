@@ -157,9 +157,9 @@ ActionView::Helpers::FormBuilder.send(:include, ErrorMessagesHelper::FormBuilder
 
 That way, we can call `<%= error_messages_for @some_model %>` in our views. Hat tip to Ryan Bates at [Railscasts](http://railscasts.com) for this code - it's a little cleaner than the helper that used to be included in Rails (before Rails 3).
 
-The last bit of prep we're going to do is to add some CSS. To save you the work, just create a file at `app/assets/stylesheets/serverly.css` with the following content:
+The last bit of prep we're going to do is to add some CSS. To save you the work, just create a file at `app/assets/stylesheets/serverly.scss` with the following content (note that we're using Sass in the Gemfile):
 
-```css
+```sass
 html, body {
   background-color: #ccc;
   font-family: Arial, sans-serif;

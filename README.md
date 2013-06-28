@@ -6,7 +6,7 @@ The Rackspace Cloud has a control panel that allows you to create new cloud serv
 
 In this tutorial, we will walk you through the creation of a simple Rails application that will allow you to manage your servers. Our goal is to get you thinking about how you can help streamline your operations by building a custom dashboard.
 
-This tutorial will show you how to write the Rails application. There is also a Depolyment Tutorial that will walk you through the steps required to deploy an application on a Rackspace Cloud server.
+This tutorial will show you how to write the Rails application. There is also a [Deployment Tutorial](https://github.com/rackerlabs/rax_rails_tutorial/blob/master/server_tutorial.md) that will walk you through the steps required to deploy an application on a Rackspace Cloud server.
 
 ###Who is This Tutorial for?
 

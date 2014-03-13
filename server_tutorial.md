@@ -241,7 +241,7 @@ server>sudo apt-get install curl git-core build-essential zlib1g-dev libssl-dev 
 This will take a minute or two.
 
 ###Installing Ruby and Rails
-Rubyists can be a bit picky about the exact version of Ruby installed on their servers, and new versions can offer significant advantages. For that reason, we are going to forgo Ubuntu's packaged version of Ruby and install it from source. We'll be using Ruby 1.9.3-p385. Some developers prefer to run a ruby version manager like [rvm](https://rvm.io/) in production, but it is my preference that such tools are best for matching the development ruby version to whatever is on the server, not as an insallation convenience. It's just simpler to install ruby directly.
+Rubyists can be a bit picky about the exact version of Ruby installed on their servers, and new versions can offer significant advantages. For that reason, we are going to forgo Ubuntu's packaged version of Ruby and install it from source. We'll be using Ruby 1.9.3-p385. Some developers prefer to run a ruby version manager like [rvm](https://rvm.io/) in production, but it is my preference that such tools are best for matching the development ruby version to whatever is on the server, not as an installation convenience. It's just simpler to install ruby directly.
 
 Create a directory called source in the deploy home directory. This is where we'll download our source code for things like Ruby. I'm sure there is a preferred place for doing this, but for our purposes it really doesn't matter and this is as good a place as any.
 

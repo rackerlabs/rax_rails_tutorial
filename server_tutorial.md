@@ -42,7 +42,7 @@ git add .
 git commit -am "initial commit"
 ```
 
-For this tutorial, we will be deploying our app from a local Git repository - the one on your laptop. Anther common configuration is to deploy from a GitHub repository. The process is very similar - check out the documentation on Github for information on how to get started if that is your need.
+For this tutorial, we will be deploying our app from a local Git repository - the one on your laptop. Another common configuration is to deploy from a GitHub repository. The process is very similar - check out the documentation on Github for information on how to get started if that is your need.
 
 Finally, lets create the development database:
 

@@ -826,7 +826,7 @@ For some information on the fog errors, see the code on Github: [https://github.
 The Rackspace team works closely with the fog community - take advantage of that support and the high quality of the fog gem. 
 
 ###Expansion Ideas
-This tutorial is pretty crude. We tried to keep it interesting by introducing some intermediate concepts, but we also needed to keep it digetable. Hopefully we've accomplished that.
+This tutorial is pretty crude. We tried to keep it interesting by introducing some intermediate concepts, but we also needed to keep it digestible. Hopefully we've accomplished that.
 
 We've explored a very simple way of accesing Rackspace via a databaseless model and seen some of the drawbacks of that approach - it can be slow. On the other hand, we did not have to worry about synching data between our own database and Rackspace. Adding a database to track things like the image_type of the images would greatly speed things up, and allow you to track data outside of that provided by the Rackspace system.
 
